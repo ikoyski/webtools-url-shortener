@@ -13,7 +13,7 @@ import com.ikoyski.webtoolsurlshortener.provider.UrlShortenerProviderFactory;
 @SpringBootTest
 class UrlShortenerProviderTinyUrlTest {
 
-	//@Test
+	// @Test
 	@DisplayName("UrlShortenerProviderTinyUrlTest.urlShortenerProviderTinyUrlSuccess()")
 	void urlShortenerProviderTinyUrlSuccess() {
 		// given
@@ -30,7 +30,7 @@ class UrlShortenerProviderTinyUrlTest {
 		Assertions.assertNotNull(urlShortenerResponse);
 	}
 
-	//@Test
+	// @Test
 	@DisplayName("UrlShortenerProviderTinyUrlTest.urlShortenerProviderTinyUrlException()")
 	void urlShortenerProviderTinyUrlException() {
 		// given
