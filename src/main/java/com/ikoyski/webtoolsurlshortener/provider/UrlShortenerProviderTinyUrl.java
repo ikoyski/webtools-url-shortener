@@ -18,7 +18,10 @@ public class UrlShortenerProviderTinyUrl implements UrlShortenerProviderBaseInte
 	public UrlShortenerResponse createShortenedUrl(UrlShortenerRequest urlShortenerRequest) {
 		UrlShortenerResponse urlShortenerResponse = null;
 		try {
-			URI uri = new URI("http://ip-api.com/json/");
+			/**
+			 * TODO: need the implementation. Refer to https://tinyurl.com/app/dev
+			 */
+			URI uri = new URI("https://api.tinyurl.com/create");
 			RestTemplate restTemplate = new RestTemplate();
 			urlShortenerResponse = restTemplate.getForObject(uri.toURL().toString(), UrlShortenerResponse.class);
 		} catch (URISyntaxException | RestClientException | MalformedURLException e) {
