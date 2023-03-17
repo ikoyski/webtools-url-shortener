@@ -12,7 +12,7 @@ class WebtoolsUrlShortenerApplicationTests {
 	void contextLoads() {
 	}
 
-	//@Test
+	@Test
 	@DisplayName("WebtoolsUrlShortenerApplicationTests.mainSuccess()")
 	void mainSuccess() {
 		// when

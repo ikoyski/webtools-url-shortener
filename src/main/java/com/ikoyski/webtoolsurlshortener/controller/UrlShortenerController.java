@@ -11,7 +11,7 @@ import com.ikoyski.webtoolsurlshortener.service.UrlShortenerService;
 @RestController
 public class UrlShortenerController {
 
-	private final UrlShortenerService urlShortenerService;
+	private UrlShortenerService urlShortenerService;
 
 	public UrlShortenerController(UrlShortenerService urlShortenerService) {
 		this.urlShortenerService = urlShortenerService;
