@@ -13,7 +13,7 @@ public class UrlShortenerService {
 
 	@Autowired
 	private UrlShortenerProviderFactory urlShortenerProviderFactory;
-	
+
 	public UrlShortenerResponse createShortenedUrl(UrlShortenerRequest urlShortenerRequest) {
 		UrlShortenerProviderBaseInterface urlShortenerProvider = urlShortenerProviderFactory
 				.createUrlShortenerProvider(UrlShortenerProviderFactory.PROVIDER_TINYURL);

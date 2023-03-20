@@ -17,11 +17,10 @@ import com.ikoyski.webtoolsurlshortener.dto.UrlShortenerResponse;
 
 public class UrlShortenerProviderTinyUrl implements UrlShortenerProviderBaseInterface {
 
-	@Value("${tinyurl.api.token}")
+	private static final String URI_CREATE = "https://api.tinyurl.com/create";
+
 	private String apiToken;
 
-	private static final String URI_CREATE = "https://api.tinyurl.com/create";
-	
 	public UrlShortenerProviderTinyUrl(String apiToken) {
 		super();
 		this.apiToken = apiToken;

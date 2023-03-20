@@ -6,14 +6,14 @@ import org.springframework.stereotype.Component;
 @Component
 public class UrlShortenerProviderFactory {
 
+	public static final String PROVIDER_TINYURL = "TinyUrl";
+
 	@Value("${tinyurl.api.token}")
 	private String tinyUrlApiToken;
-	
+
 	public void setTinyUrlApiToken(String tinyUrlApiToken) {
 		this.tinyUrlApiToken = tinyUrlApiToken;
 	}
-
-	public static final String PROVIDER_TINYURL = "TinyUrl";
 
 	public UrlShortenerProviderBaseInterface createUrlShortenerProvider(String type) {
 		if (PROVIDER_TINYURL.equals(type)) {
