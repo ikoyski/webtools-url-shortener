@@ -1,5 +1,6 @@
 package com.ikoyski.webtoolsurlshortener.controller;
 
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,6 +19,7 @@ public class UrlShortenerController {
 	}
 
 	@PostMapping(path = "api/v1/create")
+	@Cacheable(value = "shortenedUrl", key = "#urlShortenerRequest.url")
 	public UrlShortenerResponse createShortenedUrl(@RequestBody UrlShortenerRequest urlShortenerRequest) {
 		return urlShortenerService.createShortenedUrl(urlShortenerRequest);
 	}
