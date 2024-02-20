@@ -30,7 +30,7 @@ class UrlShortenerServiceTest {
 	void createShortenedUrlSuccess() {
 		// given
 		final String ORIGINAL_URL = "http://google.com";
-		final String SHORTENED_URL = "https://tinyurl.com/ajtvk4m2";
+		final String SHORTENED_URL = "http://tinyurl.com/ajtvk4m2";
 		UrlShortenerRequest urlShortenerRequest = new UrlShortenerRequest();
 		urlShortenerRequest.setUrl(ORIGINAL_URL);
 		UrlShortenerResponse urlShortenerResponse = new UrlShortenerResponse();
