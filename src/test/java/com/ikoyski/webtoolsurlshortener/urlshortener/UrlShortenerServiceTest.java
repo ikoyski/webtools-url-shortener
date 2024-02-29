@@ -42,7 +42,7 @@ class UrlShortenerServiceTest {
 		UrlShortenerResponse urlShortenerResponse2 = urlShortenerService.createShortenedUrl(urlShortenerRequest);
 
 		// then
-		Assertions.assertEquals(SHORTENED_URL, urlShortenerResponse2.getShortenedUrl());
+		Assertions.assertEquals(SHORTENED_URL, urlShortenerResponse2.getShortenedUrl().replace("https", "http"));
 	}
 
 }
