@@ -14,7 +14,7 @@ pipeline {
         stage('Git Stuff') {
             steps {
                 script {
-                	checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: $GIT_URL]])
+                	checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: '$GIT_URL']])
                 }
             }
         }
