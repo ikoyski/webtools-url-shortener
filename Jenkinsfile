@@ -30,7 +30,7 @@ pipeline {
         stage('K8s Stuff') {
         	steps {
         		sshagent(['K8s-Host-User-With-Key']) {
-					sh 'scp -o StrictHostKeyChecking=no Deploy.yaml ikoyski@$K8S_HOST_IP_USR:/home/ikoyski'
+					sh 'scp -o StrictHostKeyChecking=no Deploy-webtools-url-shortener.yaml ikoyski@$K8S_HOST_IP_USR:/home/ikoyski'
 					script {	        		
 		        		try {
 		        			sh 'ssh -o StrictHostKeyChecking=no ikoyski@$K8S_HOST_IP_USR kubectl apply -f .'
