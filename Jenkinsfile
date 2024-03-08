@@ -46,7 +46,7 @@ pipeline {
 	        		try {
 	        			sh 'echo $HOST_CREDENTIALS_PSW | ssh $HOST_CREDENTIALS_USR@${HOST-IP} kubectl apply -f .'
 	        		} catch(error) {
-	        			sh 'echo $HOST_CREDENTIALS_PSW | ssh $HOST_CREDENTIALS_USR@${HOST-IP} kubectl apply -f .'
+	        			sh 'echo $HOST_CREDENTIALS_PSW | ssh $HOST_CREDENTIALS_USR@${HOST-IP} kubectl create -f .'
 	        		}		        	
 		        }
         	}
