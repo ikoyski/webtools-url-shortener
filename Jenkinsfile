@@ -13,12 +13,16 @@ pipeline {
     stages {
         stage('Git Stuff') {
             steps {
-                checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: $GIT_URL]])
+                script {
+                	checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: $GIT_URL]])
+                }
             }
         }
         stage('Maven Stuff') {
             steps {
-                sh 'mvn clean install'
+                script {
+                	sh 'mvn clean install'
+                }
             }
         }
         stage('Docker Stuff') {
@@ -31,9 +35,9 @@ pipeline {
             }
         }
         stage('K8s Stuff') {
-        	steps {
-        		sshagent(['K8s-Host-User-With-Key']) {
-        			script {
+        	steps {        		
+        		script {
+        			sshagent(['K8s-Host-User-With-Key']) {
 						sh 'scp -o StrictHostKeyChecking=no $DEPLOYMENT_FILENAME ikoyski@$K8S_HOST_IP_USR'
 						try {
 		        			sh 'ssh -o StrictHostKeyChecking=no ikoyski@$K8S_HOST_IP_USR kubectl apply -f $DEPLOYMENT_FILENAME'
