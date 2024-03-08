@@ -43,11 +43,7 @@ pipeline {
         		script {
         			sshagent(['K8s-Host-User-With-Key']) {
 						sh 'scp -o StrictHostKeyChecking=no $DEPLOYMENT_FILENAME ikoyski@$K8S_HOST_IP_USR'
-						try {
-		        			sh 'ssh -o StrictHostKeyChecking=no ikoyski@$K8S_HOST_IP_USR kubectl apply -f $DEPLOYMENT_FILENAME'
-		        		} catch(error) {
-		        			sh 'ssh -o StrictHostKeyChecking=no ikoyski@$K8S_HOST_IP_USR kubectl create -f $DEPLOYMENT_FILENAME'
-		        		}
+						sh 'ssh -o StrictHostKeyChecking=no ikoyski@$K8S_HOST_IP_USR kubectl apply -f $DEPLOYMENT_FILENAME'
 		        	}
 				}
         	}
