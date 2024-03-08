@@ -5,48 +5,37 @@ pipeline {
     }
     environment {
         DOCKERHUB_CREDENTIALS = credentials('Dockerhub-Credentials')
-        HOST_CREDENTIALS = credentials('Host-Credentials')
+        K8S_HOST_CREDENTIALS = credentials('K8s-Host-Credentials')
+        K8S_HOST_IP = credentials('K8s-Host-IP')
     }
     stages {
-        stage('Checkout from Git') {
+        stage('Git Stuff') {
             steps {
                 checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/ikoyski/webtools-url-shortener.git']])
             }
         }
-        stage('Maven Build') {
+        stage('Maven Stuff') {
             steps {
                 sh 'mvn clean install'
             }
         }
-        stage('Build Docker Image') {
+        stage('Docker Stuff') {
             steps {
                 script {
                     sh 'docker build -t ikoyski/webtools-url-shortener:latest .'
-                }
-            }
-        }
-        stage('Login to Docker Hub') {
-            steps {
-                script {
                     sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-                }
-            }
-        }
-        stage('Push Image to Docker Hub') {
-            steps {
-                script {
                     sh 'docker push ikoyski/webtools-url-shortener:latest'
                 }
             }
-        }
-        stage('Deploy to K8s') {
+        }        
+        stage('K8s Stuff') {
         	steps {
         		script {	        		
-	        		sh 'echo $HOST_CREDENTIALS_PSW | scp -o PasswordAuthentication=yes Deploy.yaml $HOST_CREDENTIALS_USR@192.168.0.136:/home/ikoyski'
+	        		sh 'echo $K8S_HOST_CREDENTIALS_PSW | scp -o StrictHostKeyChecking=no Deploy.yaml $K8S_HOST_CREDENTIALS_USR@$K8S_HOST_IP_USR:/home/ikoyski'
 	        		try {
-	        			sh 'echo $HOST_CREDENTIALS_PSW | ssh -o PasswordAuthentication=yes $HOST_CREDENTIALS_USR@192.168.0.136 kubectl apply -f .'
+	        			sh 'echo $K8S_HOST_CREDENTIALS_PSW | ssh -o StrictHostKeyChecking=no $K8S_HOST_CREDENTIALS_USR@$K8S_HOST_IP_USR kubectl apply -f .'
 	        		} catch(error) {
-	        			sh 'echo $HOST_CREDENTIALS_PSW | ssh -o PasswordAuthentication=yes $HOST_CREDENTIALS_USR@192.168.0.136 kubectl create -f .'
+	        			sh 'echo $K8S_HOST_CREDENTIALS_PSW | ssh -o StrictHostKeyChecking=no $K8S_HOST_CREDENTIALS_USR@$K8S_HOST_IP_USR kubectl create -f .'
 	        		}	        	
 		        }
         	}
