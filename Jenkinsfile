@@ -5,7 +5,6 @@ pipeline {
     }
     environment {
         DOCKERHUB_CREDENTIALS = credentials('Dockerhub-Credentials')
-        K8S_HOST_CREDENTIALS = credentials('K8s-Host-Credentials')
         K8S_HOST_IP = credentials('K8s-Host-IP')
     }
     stages {
@@ -30,14 +29,16 @@ pipeline {
         }        
         stage('K8s Stuff') {
         	steps {
-        		script {	        		
-	        		sh 'echo $K8S_HOST_CREDENTIALS_PSW | scp -o StrictHostKeyChecking=no Deploy.yaml $K8S_HOST_CREDENTIALS_USR@$K8S_HOST_IP_USR:/home/ikoyski'
-	        		try {
-	        			sh 'echo $K8S_HOST_CREDENTIALS_PSW | ssh -o StrictHostKeyChecking=no $K8S_HOST_CREDENTIALS_USR@$K8S_HOST_IP_USR kubectl apply -f .'
-	        		} catch(error) {
-	        			sh 'echo $K8S_HOST_CREDENTIALS_PSW | ssh -o StrictHostKeyChecking=no $K8S_HOST_CREDENTIALS_USR@$K8S_HOST_IP_USR kubectl create -f .'
-	        		}	        	
-		        }
+        		sshagent(['K8s-Host-User-With-Key']) {
+					sh 'scp -o StrictHostKeyChecking=no Deploy.yaml ikoyski@$K8S_HOST_IP_USR:/home/ikoyski'
+					script {	        		
+		        		try {
+		        			sh 'ssh -o StrictHostKeyChecking=no ikoyski@$K8S_HOST_IP_USR kubectl apply -f .'
+		        		} catch(error) {
+		        			sh 'ssh -o StrictHostKeyChecking=no ikoyski@$K8S_HOST_IP_USR kubectl create -f .'
+		        		}	        	
+			        }
+				}
         	}
         }
     }
