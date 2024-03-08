@@ -5,6 +5,7 @@ pipeline {
     }
     environment {
         DOCKERHUB_CREDENTIALS = credentials('Dockerhub-Credentials')
+        HOST_CREDENTIALS = credentials('Host-Credentials')
     }
     stages {
         stage('Checkout from Git') {
@@ -37,6 +38,18 @@ pipeline {
                     sh 'docker push ikoyski/webtools-url-shortener:latest'
                 }
             }
+        }
+        stage('Deploy to K8s') {
+        	steps {
+        		withCredentials([string(credentialsId: 'Host-IP', variable: 'HOST-IP')]) {
+	        		sh 'echo $HOST_CREDENTIALS_PSW | scp -o StrictHostKeyChecking=no Deploy.yaml $HOST_CREDENTIALS_USR@${HOST-IP}:/home/ikoyski'
+	        		try {
+	        			sh 'echo $HOST_CREDENTIALS_PSW | ssh $HOST_CREDENTIALS_USR@${HOST-IP} kubectl apply -f .'
+	        		} catch(error) {
+	        			sh 'echo $HOST_CREDENTIALS_PSW | ssh $HOST_CREDENTIALS_USR@${HOST-IP} create apply -f .'
+	        		}
+	        	}
+        	}
         }
     }
 }
