@@ -42,12 +42,12 @@ pipeline {
         stage('Deploy to K8s') {
         	steps {
         		script {	        		
-	        		sh 'echo $HOST_CREDENTIALS_PSW | scp -o "PasswordAuthentication yes" Deploy.yaml $HOST_CREDENTIALS_USR@192.168.0.136:/home/ikoyski'
+	        		sh 'echo $HOST_CREDENTIALS_PSW | scp -o PasswordAuthentication=yes Deploy.yaml $HOST_CREDENTIALS_USR@192.168.0.136:/home/ikoyski'
 	        		try {
-	        			sh 'echo $HOST_CREDENTIALS_PSW | ssh -o "PasswordAuthentication yes" $HOST_CREDENTIALS_USR@192.168.0.136 kubectl apply -f .'
+	        			sh 'echo $HOST_CREDENTIALS_PSW | ssh -o PasswordAuthentication=yes $HOST_CREDENTIALS_USR@192.168.0.136 kubectl apply -f .'
 	        		} catch(error) {
-	        			sh 'echo $HOST_CREDENTIALS_PSW | ssh -o "PasswordAuthentication yes" $HOST_CREDENTIALS_USR@192.168.0.136 kubectl create -f .'
-	        		}		        	
+	        			sh 'echo $HOST_CREDENTIALS_PSW | ssh -o PasswordAuthentication=yes $HOST_CREDENTIALS_USR@192.168.0.136 kubectl create -f .'
+	        		}	        	
 		        }
         	}
         }
