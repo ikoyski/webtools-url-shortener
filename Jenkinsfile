@@ -4,17 +4,21 @@ pipeline {
         maven 'Maven-3.9.6'
     }
     environment {
-    	GIT_URL = 'https://github.com/ikoyski/webtools-url-shortener.git'
         DOCKERHUB_CREDENTIALS = credentials('Dockerhub-Credentials')
-        DOCKERHUB_IMAGE = 'ikoyski/webtools-url-shortener:latest'
         K8S_HOST_IP = credentials('K8s-Host-IP')
-        DEPLOYMENT_FILENAME = 'Deploy-webtools-url-shortener.yaml'        
+            
+        DOCKERHUB_IMAGE = 'ikoyski/webtools-url-shortener:latest'        
+        DEPLOYMENT_FILENAME = 'Deploy-webtools-url-shortener.yaml'
     }
     stages {
         stage('Git Stuff') {
             steps {
                 script {
-                	checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: '$GIT_URL']])
+                	checkout scmGit(
+                		branches: [[name: '*/master']], 
+                		extensions: [], 
+                		userRemoteConfigs: [[url: 'https://github.com/ikoyski/webtools-url-shortener.git']]
+                	)
                 }
             }
         }
