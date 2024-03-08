@@ -4,13 +4,16 @@ pipeline {
         maven 'Maven-3.9.6'
     }
     environment {
+    	GIT_URL = 'https://github.com/ikoyski/webtools-url-shortener.git'
         DOCKERHUB_CREDENTIALS = credentials('Dockerhub-Credentials')
+        DOCKERHUB_IMAGE = 'ikoyski/webtools-url-shortener:latest'
         K8S_HOST_IP = credentials('K8s-Host-IP')
+        DEPLOYMENT_FILENAME = 'Deploy-webtools-url-shortener.yaml'        
     }
     stages {
         stage('Git Stuff') {
             steps {
-                checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/ikoyski/webtools-url-shortener.git']])
+                checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: $GIT_URL]])
             }
         }
         stage('Maven Stuff') {
@@ -21,23 +24,23 @@ pipeline {
         stage('Docker Stuff') {
             steps {
                 script {
-                    sh 'docker build -t ikoyski/webtools-url-shortener:latest .'
+                    sh 'docker build -t $DOCKERHUB_IMAGE .'
                     sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-                    sh 'docker push ikoyski/webtools-url-shortener:latest'
+                    sh 'docker push $DOCKERHUB_IMAGE'
                 }
             }
-        }        
+        }
         stage('K8s Stuff') {
         	steps {
         		sshagent(['K8s-Host-User-With-Key']) {
-					sh 'scp -o StrictHostKeyChecking=no Deploy-webtools-url-shortener.yaml ikoyski@$K8S_HOST_IP_USR:/home/ikoyski'
-					script {	        		
-		        		try {
-		        			sh 'ssh -o StrictHostKeyChecking=no ikoyski@$K8S_HOST_IP_USR kubectl apply -f .'
+        			script {
+						sh 'scp -o StrictHostKeyChecking=no $DEPLOYMENT_FILENAME ikoyski@$K8S_HOST_IP_USR'
+						try {
+		        			sh 'ssh -o StrictHostKeyChecking=no ikoyski@$K8S_HOST_IP_USR kubectl apply -f $DEPLOYMENT_FILENAME'
 		        		} catch(error) {
-		        			sh 'ssh -o StrictHostKeyChecking=no ikoyski@$K8S_HOST_IP_USR kubectl create -f .'
-		        		}	        	
-			        }
+		        			sh 'ssh -o StrictHostKeyChecking=no ikoyski@$K8S_HOST_IP_USR kubectl create -f $DEPLOYMENT_FILENAME'
+		        		}
+		        	}
 				}
         	}
         }
