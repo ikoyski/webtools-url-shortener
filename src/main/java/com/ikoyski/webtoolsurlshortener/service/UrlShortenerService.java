@@ -16,7 +16,7 @@ public class UrlShortenerService {
 
 	public UrlShortenerResponse createShortenedUrl(UrlShortenerRequest urlShortenerRequest) {
 		UrlShortenerProviderBaseInterface urlShortenerProvider = urlShortenerProviderFactory
-				.createUrlShortenerProvider(UrlShortenerProviderFactory.PROVIDER_TINYURL);
+				.createUrlShortenerProvider();
 		return urlShortenerProvider.createShortenedUrl(urlShortenerRequest);
 	}
 

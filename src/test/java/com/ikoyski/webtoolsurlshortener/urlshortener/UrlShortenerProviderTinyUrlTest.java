@@ -14,7 +14,7 @@ import com.ikoyski.webtoolsurlshortener.provider.UrlShortenerProviderFactory;
 @SpringBootTest
 class UrlShortenerProviderTinyUrlTest {
 	
-	@Value("${tinyurl.api.token}")
+	@Value("${provider.tinyurl.api.token}")
 	private String tinyUrlApiToken;
 
 	@Test

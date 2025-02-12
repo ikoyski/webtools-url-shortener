@@ -8,11 +8,18 @@ public class UrlShortenerProviderFactory {
 
 	public static final String PROVIDER_TINYURL = "TinyUrl";
 
-	@Value("${tinyurl.api.token}")
+	@Value("${provider.default}")
+	private String PROVIDER_DEFAULT;
+
+	@Value("${provider.tinyurl.api.token}")
 	private String tinyUrlApiToken;
 
 	public void setTinyUrlApiToken(String tinyUrlApiToken) {
 		this.tinyUrlApiToken = tinyUrlApiToken;
+	}
+
+	public UrlShortenerProviderBaseInterface createUrlShortenerProvider() {
+		return createUrlShortenerProvider(PROVIDER_DEFAULT);
 	}
 
 	public UrlShortenerProviderBaseInterface createUrlShortenerProvider(String type) {
