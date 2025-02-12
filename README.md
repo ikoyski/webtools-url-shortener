@@ -76,11 +76,23 @@ This endpoint will return something like the following.
 }
 ```
 
-Hit the functional endpoint (**Server**)
+Hit the functional endpoint (**localhost**)
 
 ```
 curl -X 'POST' \
   'http://localhost:8080/api/v1/create' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "url": "https://www.example.com/my-really-long-link-that-I-need-to-shorten/84378949",
+}'
+```
+
+Hit the functional endpoint (**render**)
+
+```
+curl -X 'POST' \
+  'https://webtools-url-shortener.onrender.com/api/v1/create' \
   -H 'accept: application/json' \
   -H 'Content-Type: application/json' \
   -d '{
