@@ -1,4 +1,4 @@
-package com.ikoyski.webtoolsurlshortener.provider;
+package com.ikoyski.webtools.urlshortener.provider;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -11,8 +11,8 @@ import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.ikoyski.webtoolsurlshortener.dto.UrlShortenerRequest;
-import com.ikoyski.webtoolsurlshortener.dto.UrlShortenerResponse;
+import com.ikoyski.webtools.urlshortener.dto.UrlShortenerRequest;
+import com.ikoyski.webtools.urlshortener.dto.UrlShortenerResponse;
 
 public class UrlShortenerProviderTinyUrl implements UrlShortenerProviderBaseInterface {
 

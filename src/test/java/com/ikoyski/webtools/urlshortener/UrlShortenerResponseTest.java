@@ -1,11 +1,11 @@
-package com.ikoyski.webtoolsurlshortener.urlshortener;
+package com.ikoyski.webtools.urlshortener;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.ikoyski.webtoolsurlshortener.dto.UrlShortenerResponse;
+import com.ikoyski.webtools.urlshortener.dto.UrlShortenerResponse;
 
 @SpringBootTest
 class UrlShortenerResponseTest {

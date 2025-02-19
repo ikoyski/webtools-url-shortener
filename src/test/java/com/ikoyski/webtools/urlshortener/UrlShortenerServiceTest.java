@@ -1,4 +1,4 @@
-package com.ikoyski.webtoolsurlshortener.urlshortener;
+package com.ikoyski.webtools.urlshortener;
 
 import static org.mockito.Mockito.doReturn;
 
@@ -7,13 +7,13 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
-import com.ikoyski.webtoolsurlshortener.dto.UrlShortenerRequest;
-import com.ikoyski.webtoolsurlshortener.dto.UrlShortenerResponse;
-import com.ikoyski.webtoolsurlshortener.provider.UrlShortenerProviderBaseInterface;
-import com.ikoyski.webtoolsurlshortener.service.UrlShortenerService;
+import com.ikoyski.webtools.urlshortener.dto.UrlShortenerRequest;
+import com.ikoyski.webtools.urlshortener.dto.UrlShortenerResponse;
+import com.ikoyski.webtools.urlshortener.provider.UrlShortenerProviderBaseInterface;
+import com.ikoyski.webtools.urlshortener.service.UrlShortenerService;
 
 @SpringBootTest
 @ActiveProfiles("test")
@@ -22,7 +22,7 @@ class UrlShortenerServiceTest {
 	@Autowired
 	private UrlShortenerService urlShortenerService;
 
-	@MockBean
+	@MockitoBean
 	UrlShortenerProviderBaseInterface urlShortenerProvider;
 
 	@Test

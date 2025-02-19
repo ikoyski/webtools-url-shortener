@@ -1,7 +1,7 @@
-package com.ikoyski.webtoolsurlshortener.provider;
+package com.ikoyski.webtools.urlshortener.provider;
 
-import com.ikoyski.webtoolsurlshortener.dto.UrlShortenerRequest;
-import com.ikoyski.webtoolsurlshortener.dto.UrlShortenerResponse;
+import com.ikoyski.webtools.urlshortener.dto.UrlShortenerRequest;
+import com.ikoyski.webtools.urlshortener.dto.UrlShortenerResponse;
 
 public interface UrlShortenerProviderBaseInterface {
 

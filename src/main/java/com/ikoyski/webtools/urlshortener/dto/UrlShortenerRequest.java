@@ -1,4 +1,4 @@
-package com.ikoyski.webtoolsurlshortener.dto;
+package com.ikoyski.webtools.urlshortener.dto;
 
 public class UrlShortenerRequest {
 
