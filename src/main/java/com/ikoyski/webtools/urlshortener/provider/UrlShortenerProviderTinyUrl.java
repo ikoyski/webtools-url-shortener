@@ -3,10 +3,12 @@ package com.ikoyski.webtools.urlshortener.provider;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.server.ResponseStatusException;
@@ -14,27 +16,25 @@ import org.springframework.web.server.ResponseStatusException;
 import com.ikoyski.webtools.urlshortener.dto.UrlShortenerRequest;
 import com.ikoyski.webtools.urlshortener.dto.UrlShortenerResponse;
 
+@Component
 public class UrlShortenerProviderTinyUrl implements UrlShortenerProviderBaseInterface {
 
-	private static final String URI_CREATE = "https://api.tinyurl.com/create";
+	@Value("${provider.tinyUrl.baseUrl}")
+	private String BASE_URL;
 
-	private String apiToken;
-
-	public UrlShortenerProviderTinyUrl(String apiToken) {
-		super();
-		this.apiToken = apiToken;
-	}
+	@Value("${provider.tinyUrl.api.token}")
+	private String API_TOKEN;
 
 	@Override
 	public UrlShortenerResponse createShortenedUrl(UrlShortenerRequest urlShortenerRequest) {
 		UrlShortenerResponse urlShortenerResponse = null;
 		try {
-			URI uri = new URI(URI_CREATE);
+			URI uri = new URI(BASE_URL + "/create");
 			RestTemplate restTemplate = new RestTemplate();
 
 			HttpHeaders headers = new HttpHeaders();
 			headers.setContentType(MediaType.APPLICATION_JSON);
-			headers.set("Authorization", "Bearer " + apiToken);
+			headers.set("Authorization", "Bearer " + API_TOKEN);
 
 			urlShortenerResponse = responseAdapter(restTemplate.postForObject(uri,
 					new HttpEntity<TinyUrlRequest>(requestAdapter(urlShortenerRequest), headers),
