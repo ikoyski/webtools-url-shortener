@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: webtools-url-shortener
+  config:
+    import: "optional:configserver:http://192.168.0.164:8189"

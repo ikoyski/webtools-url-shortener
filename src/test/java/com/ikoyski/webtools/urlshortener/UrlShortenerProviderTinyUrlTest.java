@@ -3,8 +3,9 @@ package com.ikoyski.webtools.urlshortener;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 import com.ikoyski.webtools.urlshortener.dto.UrlShortenerRequest;
 import com.ikoyski.webtools.urlshortener.dto.UrlShortenerResponse;
@@ -12,10 +13,11 @@ import com.ikoyski.webtools.urlshortener.provider.UrlShortenerProviderBaseInterf
 import com.ikoyski.webtools.urlshortener.provider.UrlShortenerProviderFactory;
 
 @SpringBootTest
+@ActiveProfiles("test")
 class UrlShortenerProviderTinyUrlTest {
-	
-	@Value("${provider.tinyurl.api.token}")
-	private String tinyUrlApiToken;
+
+	@Autowired
+	UrlShortenerProviderFactory urlShortenerProviderFactory;
 
 	@Test
 	@DisplayName("UrlShortenerProviderTinyUrlTest.urlShortenerProviderTinyUrlSuccess()")
@@ -23,8 +25,6 @@ class UrlShortenerProviderTinyUrlTest {
 		// given
 		final UrlShortenerRequest urlShortenerRequest = new UrlShortenerRequest();
 		urlShortenerRequest.setUrl("http://google.com");
-		UrlShortenerProviderFactory urlShortenerProviderFactory = new UrlShortenerProviderFactory();
-		urlShortenerProviderFactory.setTinyUrlApiToken(tinyUrlApiToken);
 		UrlShortenerProviderBaseInterface urlShortenerProvider = urlShortenerProviderFactory
 				.createUrlShortenerProvider(UrlShortenerProviderFactory.PROVIDER_TINYURL);
 
@@ -41,10 +41,8 @@ class UrlShortenerProviderTinyUrlTest {
 		// given
 		final UrlShortenerRequest urlShortenerRequest = new UrlShortenerRequest();
 		urlShortenerRequest.setUrl("");
-		UrlShortenerProviderFactory urlShortenerProviderFactory = new UrlShortenerProviderFactory();
-		urlShortenerProviderFactory.setTinyUrlApiToken(tinyUrlApiToken);
 		UrlShortenerProviderBaseInterface urlShortenerProvider = urlShortenerProviderFactory
-				.createUrlShortenerProvider(UrlShortenerProviderFactory.PROVIDER_TINYURL);
+				.createUrlShortenerProvider();
 
 		// when and then
 		Assertions.assertThrows(Exception.class, () -> urlShortenerProvider.createShortenedUrl(urlShortenerRequest));

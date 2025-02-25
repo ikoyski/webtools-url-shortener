@@ -1,26 +1,5 @@
-server:
-  port: 8091
-
 spring:
   application:
     name: webtools-url-shortener
-
-management:
-  endpoints:
-    web:
-      exposure:
-        include: health,info
-  info:
-    git:
-      mode: full
-
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: http://localhost:8761
-
-provider:
-  default: TinyUrl
-  tinyurl:
-    api:
-      token: vD1D7nK7YFdeiQTarZCKM4poxZodSxrAA9xJhsGyrbrDXXShJQnqfngLa7LK
+  config:
+    import: "optional:configserver:http://localhost:8089"
