@@ -8,7 +8,7 @@ pipeline {
         K8S_HOST_IP = credentials('K8s-Host-IP') //username and ip
             
         DOCKERHUB_IMAGE = 'ikoyski/webtools-url-shortener:latest'        
-        DEPLOYMENT_FILENAME = 'Deploy-webtools-url-shortener.yaml'
+        DEPLOYMENT_FILENAME = 'Deploy-webtools-url-shortener-private.yaml'
     }
     stages {
         stage('Git Stuff') {

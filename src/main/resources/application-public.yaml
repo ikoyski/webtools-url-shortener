@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: webtools-url-shortener
+  config:
+    import: "optional:configserver:https://webtools-config-server.onrender.com"
